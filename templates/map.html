@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>maps</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+  <style>
+    #mapid{
+      width:100%;
+      height: 100vh;
+    }
+
+    body{
+      padding:0;
+      margin:0;
+    }
+  </style>
+</head>
+{% if request.user.is_authenticated %}
+<body>
+  <div id="mapid"></div>
+
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('mapid').setView([38.26033376407891, 140.88240531147562], 12);
+    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+    }).addTo(map);
+
+    //仙台駅の位置にマーカーを追加する。
+    var sendai = L.marker([38.26033376407891, 140.88240531147562]).addTo(map);
+    //仙台駅の位置にマーカーを追加する。
+    var myu = L.marker([38.350328113778396, 140.84179206246833]).addTo(map);
+    //上のマーカーにポップアップを追加する。
+    sendai.bindPopup("仙台駅").openPopup();
+    myu.bindPopup("宮城大学").openPopup();
+  </script>
+</body>
+{% endif %}
+</html>
